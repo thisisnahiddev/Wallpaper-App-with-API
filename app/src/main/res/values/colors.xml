@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="my_primary">@color/black</color>
+    <color name="my_secondary">#131313</color>
+    <color name="tab_selected_text">@color/white</color>
+    <color name="tab_text">#616161</color>
+
+
+
+    <color name="red">#FF0000</color>
+    <color name="orange">#FFA500</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#008000</color>
+    <color name="turquoise">#40e0d0</color>
+    <color name="blue">#0000FF</color>
+    <color name="violet">#7F00FF</color>
+    <color name="pink">#FFC0CB</color>
+    <color name="brown">#964B00</color>
+    <color name="gray">#B2BEB5</color>
+
+
+
+</resources>

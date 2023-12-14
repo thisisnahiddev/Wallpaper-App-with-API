@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Image E</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="drawer_close"><u>Close Drawer</u></string>
+    <string name="drawer_open"><u>Open Drawer</u></string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
