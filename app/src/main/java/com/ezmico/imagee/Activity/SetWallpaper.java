@@ -1,9 +1,11 @@
 package com.ezmico.imagee.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.SnapHelper;
+
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -32,6 +34,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,7 +67,7 @@ public class SetWallpaper extends AppCompatActivity {
 
 
         binding.progressBar.setVisibility(View.VISIBLE);
-        // ProgressBoxForImage();
+
         intent = getIntent();
         if (intent != null) {
             IntentPosition = intent.getIntExtra("position",0);
@@ -83,93 +86,74 @@ public class SetWallpaper extends AppCompatActivity {
         getPexelsPhotos();
 
 
-        binding.setBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.setBtn.setOnClickListener(v -> {
 
 
-                Dialog setDialog = new Dialog(SetWallpaper.this);
-                setDialog.setContentView(R.layout.custom_set);
+            Dialog setDialog = new Dialog(SetWallpaper.this);
+            setDialog.setContentView(R.layout.custom_set);
 
-                TextView homeScreen = setDialog.findViewById(R.id.homeScreen);
-                TextView lockScreen = setDialog.findViewById(R.id.lockScreen);
-                TextView bothScreen = setDialog.findViewById(R.id.bothScreen);
+            TextView homeScreen = setDialog.findViewById(R.id.homeScreen);
+            TextView lockScreen = setDialog.findViewById(R.id.lockScreen);
+            TextView bothScreen = setDialog.findViewById(R.id.bothScreen);
 
-                //........
+            //........
 
-                homeScreen.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            homeScreen.setOnClickListener(v1 -> {
 
 
-                        setDialog.dismiss();
+                setDialog.dismiss();
 
-                        SET_TYPE = 1;
+                SET_TYPE = 1;
 
-                        setWallpaperFromUrl(SetWallpaper.this, selectedImage);
-
-
-                        Toast.makeText(getApplicationContext(), "Set Wallpaper Successfully", Toast.LENGTH_SHORT).show();
+                setWallpaperFromUrl(SetWallpaper.this, selectedImage);
 
 
-                    }
-                });
-                lockScreen.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setDialog.dismiss();
-                        SET_TYPE = 2;
-
-                        setWallpaperFromUrl(SetWallpaper.this, selectedImage);
-
-                        Toast.makeText(getApplicationContext(), "Set Wallpaper Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Set Wallpaper Successfully", Toast.LENGTH_SHORT).show();
 
 
-                    }
-                });
-                bothScreen.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setDialog.dismiss();
+            });
+            lockScreen.setOnClickListener(v13 -> {
+                setDialog.dismiss();
+                SET_TYPE = 2;
 
-                        SET_TYPE = 0;
+                setWallpaperFromUrl(SetWallpaper.this, selectedImage);
 
-                        setWallpaperFromUrl(SetWallpaper.this, selectedImage);
-                        Toast.makeText(getApplicationContext(), "Set Wallpaper Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Set Wallpaper Successfully", Toast.LENGTH_SHORT).show();
 
 
-                    }
-                });
+            });
+            bothScreen.setOnClickListener(v12 -> {
+                setDialog.dismiss();
 
-                setDialog.show();
+                SET_TYPE = 0;
+
+                setWallpaperFromUrl(SetWallpaper.this, selectedImage);
+                Toast.makeText(getApplicationContext(), "Set Wallpaper Successfully", Toast.LENGTH_SHORT).show();
 
 
-            }
+            });
+
+            setDialog.show();
+
+
         });
 
-        binding.topMenu.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onClick(View v) {
+        binding.topMenu.setOnClickListener(v -> {
 
 
-                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+            BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+            bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
 
 
 
 
 
-            }
         });
-        binding.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.back.setOnClickListener(v -> {
 
-                startActivity(new Intent(SetWallpaper.this, MainActivity.class));
-                finishAffinity();
+            startActivity(new Intent(SetWallpaper.this, MainActivity.class));
+            finishAffinity();
 
-            }
         });
 
 
@@ -181,7 +165,7 @@ public class SetWallpaper extends AppCompatActivity {
 
         ApiClient.getApiInterface().getImage(1, 80).enqueue(new Callback<PexelsSearchModel>() {
             @Override
-            public void onResponse(Call<PexelsSearchModel> call, Response<PexelsSearchModel> response) {
+            public void onResponse(@NonNull Call<PexelsSearchModel> call, @NonNull Response<PexelsSearchModel> response) {
 
                 binding.progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
@@ -201,9 +185,9 @@ public class SetWallpaper extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PexelsSearchModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<PexelsSearchModel> call, @NonNull Throwable t) {
 
-                Log.e("failure", t.getLocalizedMessage());
+                Log.e("failure", Objects.requireNonNull(t.getLocalizedMessage()));
             }
         });
 
@@ -219,6 +203,7 @@ public class SetWallpaper extends AppCompatActivity {
 
     private static class WallpaperAsyncTask extends AsyncTask<String, Void, BitmapDrawable> {
 
+        @SuppressLint("StaticFieldLeak")
         private final Context context;
 
 
